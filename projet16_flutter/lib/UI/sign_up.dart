@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:projet16_flutter/fire_base_connexion.dart';
-
 class SignUpUi extends StatefulWidget {
   const SignUpUi({Key? key}) : super(key: key);
 
@@ -220,7 +219,7 @@ class _SignUpUiState extends State<SignUpUi> {
                             (
                             //Pour le label 'Email'
                             fontFamily: 'Google Sans',
-                            color: Colors.white,
+                            color: Colors.white70,
                           ),
                           filled: true,
                           fillColor: const Color(0xFF1e262c),
@@ -278,7 +277,7 @@ class _SignUpUiState extends State<SignUpUi> {
                             (
                             //Pour le label 'Email'
                             fontFamily: 'Google Sans',
-                            color: Colors.white,
+                            color: Colors.white70,
                           ),
                           filled: true,
                           fillColor: const Color(0xFF1e262c),
@@ -313,10 +312,9 @@ class _SignUpUiState extends State<SignUpUi> {
                         ),
                         style: const TextStyle
                           (
-                          //Couleur du texte tapé par l'utilisateur
                           color: Colors.white,
                         ),
-                        //On ne créé pas le compte tant que ce n'est pas bon.
+
                         validator: (input) {
                           if (input==null || input.isEmpty){
                             return 'Veuillez renseigner une adresse e-mail';
@@ -345,7 +343,7 @@ class _SignUpUiState extends State<SignUpUi> {
                           labelStyle: const TextStyle(
                             //Pour le label Password
                             fontFamily: 'Google Sans',
-                            color: Colors.white,
+                            color: Colors.white70,
                           ),
                           filled: true,
                           fillColor: const Color(0xFF1e262c),
@@ -403,11 +401,11 @@ class _SignUpUiState extends State<SignUpUi> {
                         controller: _confirmPasswordController,
                         // ignore: prefer_const_constructors
                         decoration: InputDecoration(
-                          labelText: "Confirmez le mot de passe",
+
+                          labelText: "verification du mot de passe",
                           labelStyle: const TextStyle(
-                            //Pour le Label Confirmation de Mot de passe
                             fontFamily: 'Google Sans',
-                            color: Colors.white,
+                            color: Colors.white70,
                           ),
                           filled: true,
                           fillColor: const Color(0xFF1e262c),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projet16_flutter/UI/home.dart';
 import 'package:projet16_flutter/UI/sign_up.dart';
 import 'package:projet16_flutter/fire_base_connexion.dart';
 class LoginUi extends StatefulWidget {
@@ -34,7 +35,7 @@ class _LoginUiState extends State<LoginUi> {
 
    try {
      await _auth.signIn(email, password);
-     Navigator.pushReplacementNamed(context, '/home');
+      Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeUi()));
    } catch (error) {
      setState(() {
        _emailError = error.toString();
@@ -160,7 +161,7 @@ class _LoginUiState extends State<LoginUi> {
                       const SizedBox(height: 100.0),//4eme child column2
                       ElevatedButton(
                           onPressed:(){
-                            // _signIn,
+                            _signIn;
                           },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(1.0, 20.0, 1.0, 20.0), backgroundColor: const Color(0xFF636AF6),

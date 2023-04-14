@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projet16_flutter/UI/home.dart';
 import 'package:projet16_flutter/UI/login.dart';
 import 'package:projet16_flutter/UI/sign_up.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,10 +19,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/home',
       routes: {
         '/login':(context) => const LoginUi(),
-        'sign_up':(context) => const SignUpUi()
+        '/sign_up':(context) => const SignUpUi(),
+        '/home':(context)=> const HomeUi(),
       }
         ,
       theme: ThemeData(
