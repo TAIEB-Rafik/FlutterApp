@@ -16,7 +16,7 @@ class _SignUpUiState extends State<SignUpUi> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final CallFireBase _register = CallFireBase();
+  final CallFireBase _newUser = CallFireBase();
   //controls  Form
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
@@ -124,22 +124,22 @@ class _SignUpUiState extends State<SignUpUi> {
 
       try {
         // Appeler signUp() depuis l'instance de Backend
-        await _register.signUp(_email, _password);
+        await _newUser.signUp(_email, _password);
 
         //On connecte l'utilisateur
         await _auth.signInWithEmailAndPassword(email: _email, password: _password);
 
         // Redirection vers la page de connexion
         // ignore: use_build_context_synchronously
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/login');
       } catch (error) {
-        if (error.toString().contains('Le mot de passe est trop faible.')) {
-          // Gérer l'erreur 'Le mot de passe est trop faible.'
-          logger.e('Le mot de passe est trop faible.');
-        } else if (error.toString().contains('Cet email est déjà utilisé.')) {
+        if (error.toString().contains('Le mot de passe faible.')) {
+          // Gérer l'erreur 'Le mot de passe faible.'
+          logger.e('Le mot de passe faible.');
+        } else if (error.toString().contains('email déjà utilisé.')) {
           // Gérer l'erreur 'Cet email est déjà utilisé.'
           isAlreadyExist = true;
-          logger.e('Cet email est déjà utilisé.');
+          logger.e('email déjà utilisé.');
         } else {
           // Gérer les autres erreurs
           logger.e(error.toString());
@@ -163,17 +163,14 @@ class _SignUpUiState extends State<SignUpUi> {
   Widget build(BuildContext context) {
     return  Scaffold(
         backgroundColor: const Color(0xFF1a2025),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(top: 50.0),
+        body: ListView(
+
+          children:[ Padding(
+            padding: EdgeInsets.only(top: 70.0, left: 20, right: 20),
             child: Stack(
               children: [
-                Positioned.fill(
-                  child: Opacity(
-                    opacity: 1,
-                    child: Image.asset('assets/images/bg.png', fit: BoxFit.cover),
-                  ),
-                ),
+                const Image(image: AssetImage('assets/images/bg.jpg')),//image: AssetImage('assets/images/bg.jpg')
+
                 Form(
                   key: _formKey,
                   child: Column(
@@ -197,7 +194,8 @@ class _SignUpUiState extends State<SignUpUi> {
 
                       Container
                         (
-                        padding: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 40.0),
+                        padding: const EdgeInsets.only( top: 20.0,bottom: 40.0, left: 20.0, right: 20.0),
+                        alignment: Alignment.center,
                         child: const Text
                           (
                           'Veuillez saisir ces différentes informations, afin que vos listes soient sauvegardées.',
@@ -210,6 +208,7 @@ class _SignUpUiState extends State<SignUpUi> {
                           textAlign: TextAlign.center,
                         ),
                       ),//2nd
+                      SizedBox(height: 30),
 
                       TextFormField(
                         controller: _pseudoController,
@@ -446,15 +445,15 @@ class _SignUpUiState extends State<SignUpUi> {
                         //On va vérifier si les deux mots de passes sont les mêmes. Si NON, on bloque la création
                         validator: (input) {
                           if (input==null || input.isEmpty) {
-                            return "Veuillez renseigner la confirmation de mot de passe";
+                            return "Veuillez  confirmer votre mot de passe";
                           } else if (input != _tempPassword ) {
-                            return "Les mots de passe ne correspondent pas";
+                            return "Les mots de passe sont differents ";
                           }
                           return null;
                         },
 
                       ),//9th
-                      const SizedBox(height: 90.0),//10
+                      const SizedBox(height: 130.0),//10
 
                       ElevatedButton
                         (
@@ -509,6 +508,7 @@ class _SignUpUiState extends State<SignUpUi> {
               ],
             ),
           ),
+    ]
         )
     );
   }
