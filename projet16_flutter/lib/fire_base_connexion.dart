@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+
+
 class CallFireBase {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -50,7 +52,7 @@ class CallFireBase {
 
     DatabaseReference likesRef = FirebaseDatabase.instance
 
-        .reference()
+        .ref()
         .child('liked_games')
         .child(FirebaseAuth.instance.currentUser!.uid)
         .child(gameId);
@@ -64,51 +66,37 @@ class CallFireBase {
     }
   }
 
-  //permet de voir si un jeu est liké ou non dans la data base
   Future<bool> isLiked(String gameId) async {
-    //conecction
     DatabaseReference likesRef = FirebaseDatabase.instance
-    // ignore: deprecated_member_use
-        .reference()
+        .ref()
         .child('liked_games')
         .child(FirebaseAuth.instance.currentUser!.uid)
         .child(gameId);
-    //On va lire s"il existe
     DatabaseEvent snapshot = await likesRef.once();
     return snapshot.snapshot.value != null;
   }
 
-
-  //Permet de se connecter pour ecrire dans la partie wishlist de la data base. On a besoin de l'ID
   Future<void> connectToWishlist(String gameId, bool isInWishlist) async {
     //connection
-    DatabaseReference wishlistRef = FirebaseDatabase.instance
-    // ignore: deprecated_member_use
-        .reference()
+    DatabaseReference wishlistRefference = FirebaseDatabase.instance
+        .ref()
         .child('wish_games')
         .child(FirebaseAuth.instance.currentUser!.uid)
         .child(gameId);
-    //Si il est pas encore wishlisté
     if (isInWishlist) {
-      //on l'ajoute
-      await wishlistRef.set(gameId);
+      await wishlistRefference.set(gameId);
     } else {
-      //sinon on le supprime
-      await wishlistRef.remove();
+      await wishlistRefference.remove();
     }
   }
 
-  //permet de voir si un jeu est wishlisté ou non dans la data base
   Future<bool> isInWishlist(String gameId) async {
-    //connection
-    DatabaseReference wishlistRef = FirebaseDatabase.instance
-    // ignore: deprecated_member_use
-        .reference()
+    DatabaseReference wishlistRefference = FirebaseDatabase.instance
+        .ref()
         .child('wish_games')
         .child(FirebaseAuth.instance.currentUser!.uid)
         .child(gameId);
-    //On va lire s"il existe
-    DatabaseEvent snapshot = await wishlistRef.once();
+    DatabaseEvent snapshot = await wishlistRefference.once();
     return snapshot.snapshot.value != null;
   }
 

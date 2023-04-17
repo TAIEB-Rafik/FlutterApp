@@ -186,3 +186,27 @@ Future<List<Map<String, dynamic>>> getGameReviews(String gameId) async {
 
 
 
+
+
+
+
+
+Future<String> getSteamUsername(String steamId) async {
+  const apiKey = "345E950B428C0A29F7ED5A936D461277";
+  final url =
+      "https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=$apiKey&format=json&steamids=$steamId";
+  final response = await http.get(Uri.parse(url));
+  if (response.statusCode == 200) {
+    final jsonResponse = json.decode(response.body);
+    String username = jsonResponse['response']['players'][0]['personaname'];
+    if(username.length > 25) {
+      username = username.substring(0, 25);
+    }
+    return username;
+  } else {
+    throw Exception('Failed to fetch steam username.');
+  }
+}
+
+
+
